@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	server := g.Server()
 
-	g.Server().Run()
+	server.SetFileServerEnabled(true)
+	server.Run()
 }

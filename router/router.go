@@ -2,6 +2,7 @@ package router
 
 import (
 	"TestTools/app/api/page"
+	"TestTools/app/api/webderver"
 
 	"github.com/gogf/gf/frame/g"
 	"github.com/gogf/gf/net/ghttp"
@@ -18,16 +19,16 @@ func init() {
 
 	// 分组路由注册方式
 	s.Group("/", func(group *ghttp.RouterGroup) {
-		// ctlChat := new(chat.C)
 
-		ctlUser := new(page.MainPage)
-		// group.Middleware(middleware.CORS)
-		// group.ALL("/chat", ctlChat)
-		group.ALL("/index", ctlUser)
-		// group.ALL("/curd/:table", new(curd.C))
-		// group.Group("/", func(group *ghttp.RouterGroup) {
-		// 	group.Middleware(middleware.Auth)
-		// 	group.ALL("/user/profile", ctlUser, "Profile")
-		// })
+		mainPage := new(page.MainPage)
+
+		group.ALL("/index", mainPage.Index)
+
 	})
+	s.Group("/webDeiver", func(group *ghttp.RouterGroup) {
+		webDerver := new(webderver.WebDerver)
+		group.ALL("/New", webDerver.New)
+		group.ALL("/Close", webDerver.Close)
+	})
+
 }

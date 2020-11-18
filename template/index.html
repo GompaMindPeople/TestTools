@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="/resource/layui/css/layui.css" media="all">
+<script src="/resource/js/jquery-3.5.1.js"></script>
+<script src="/resource/layui/layui.js"></script>
+
+<head>
+    <title>GoFrame Layout</title>
+    {{.id}}<br> {{.name}}
+</head>
+
+
+<body>
+    <button type="button" id="but" class="layui-btn layui-btn-warm">暖色按钮</button>
+    <!-- <div class="container">
+    </div>
+    <div class="footer">
+    </div> -->
+
+
+</body>
+<script>
+    $('#but').click(function() {
+        console.log("aaaa")
+        dele("aa")
+    })
+
+    function dele(name) {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            layer.msg('你确定要发送', {
+                time: 2000, //2秒自动关闭
+                btn: ['确定', '取消'],
+                yes: function(index) {
+                    console.log(name);
+                    $.ajax({
+                        url: "/index",
+                        data: {
+                            'name': "xiaoming"
+                        },
+                        type: "Get",
+                        success: function(data) {
+                            console.log(data);
+                            layer.msg(data.msg);
+                            location.reload(); //删除成功后再刷新
+                        },
+                        error: function(data) {
+                            $.messager.alert('错误', data.msg);
+                        }
+                    });
+                    layer.close(index);
+                }
+            });
+        });
+    };
+</script>
+
+</html>
