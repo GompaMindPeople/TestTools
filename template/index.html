@@ -11,44 +11,118 @@
 
 
 <body>
-    <button type="button" id="but" class="layui-btn layui-btn-warm">暖色按钮</button>
+
+
+
+    <button type="button" id="start" class="layui-btn layui-btn-warm">启动</button>
     <!-- <div class="container">
     </div>
     <div class="footer">
     </div> -->
 
+    <form class="layui-form" method="POST" action="">
 
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">文本域</label>
+            <div class="layui-input-block">
+                <textarea name="step" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type="reset" id="step_btn" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
 </body>
 <script>
-    $('#but').click(function() {
+    $('#start').click(function() {
         console.log("aaaa")
-        dele("aa")
+        start("aa")
     })
 
-    function dele(name) {
+    function step() {
+        layui.use('layer', function() {
+            var form = layui.form;
+            // layer.msg('你确定要发送', {
+            //     time: 2000, //2秒自动关闭
+            //     btn: ['确定', '取消'],
+            //     yes: function(index) {
+            //         console.log(name);
+
+            //         layer.close(index);
+            //     }
+            // });
+
+            let data = form.val("")
+            $.ajax({
+                url: "/webDeiver/Step",
+                data: data,
+                type: "Get",
+                success: function(data) {
+
+                    layer.msg(data.message);
+                    location.reload(); //删除成功后再刷新
+                },
+                error: function(data) {
+                    layer.msg('错误', data.msg);
+                }
+            });
+        });
+    };
+
+    function start(name) {
         layui.use('layer', function() {
             var layer = layui.layer;
-            layer.msg('你确定要发送', {
-                time: 2000, //2秒自动关闭
-                btn: ['确定', '取消'],
-                yes: function(index) {
-                    console.log(name);
-                    $.ajax({
-                        url: "/index",
-                        data: {
-                            'name': "xiaoming"
-                        },
-                        type: "Get",
-                        success: function(data) {
-                            console.log(data);
-                            layer.msg(data.msg);
-                            location.reload(); //删除成功后再刷新
-                        },
-                        error: function(data) {
-                            $.messager.alert('错误', data.msg);
-                        }
-                    });
-                    layer.close(index);
+            // layer.msg('你确定要发送', {
+            //     time: 2000, //2秒自动关闭
+            //     btn: ['确定', '取消'],
+            //     yes: function(index) {
+            //         console.log(name);
+
+            //         layer.close(index);
+            //     }
+            // });
+            $.ajax({
+                url: "/webDeiver/New",
+                data: {
+                    'port': 8899
+                },
+                type: "Get",
+                success: function(data) {
+
+                    layer.msg(data.message);
+                    location.reload(); //删除成功后再刷新
+                },
+                error: function(data) {
+                    layer.msg('错误', data.msg);
+                }
+            });
+        });
+    };
+
+    function close(name) {
+        layui.use('layer', function() {
+            var layer = layui.layer;
+            // layer.msg('你确定要发送', {
+            //     time: 2000, //2秒自动关闭
+            //     btn: ['确定', '取消'],
+            //     yes: function(index) {
+            //         console.log(name);
+
+            //         layer.close(index);
+            //     }
+            // });
+            $.ajax({
+                url: "/webDeiver/Close",
+                type: "Get",
+                success: function(data) {
+                    layer.msg(data.message);
+                    location.reload(); //删除成功后再刷新
+                },
+                error: function(data) {
+                    $.messager.alert('错误', data.msg);
                 }
             });
         });

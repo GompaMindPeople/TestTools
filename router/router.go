@@ -27,6 +27,7 @@ func init() {
 	})
 	s.Group("/webDeiver", func(group *ghttp.RouterGroup) {
 		webDerver := new(webderver.WebDerver)
+		group.ALL("/Step", webDerver.Step)
 		group.ALL("/New", webDerver.New)
 		group.ALL("/Close", webDerver.Close)
 	})

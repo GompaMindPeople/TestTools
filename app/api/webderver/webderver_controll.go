@@ -4,6 +4,7 @@ package webderver
 import (
 	"TestTools/library/response"
 	"fmt"
+	"strings"
 
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/tebeka/selenium"
@@ -15,6 +16,16 @@ type WebDerver struct {
 }
 
 const seleniumPath = "./resource/chromedriver.exe"
+
+// Step 执行监控
+func (wd *WebDerver) Step(r *ghttp.Request) {
+	// ss := wd.ss
+	step := r.GetFormString("step")
+	strings.Split(step, "\n")
+	fmt.Println(step)
+	// wd.FindElements()
+
+}
 
 // New  用于创建一个 WebDerver
 func (wd *WebDerver) New(r *ghttp.Request) {
@@ -46,7 +57,6 @@ func (wd *WebDerver) Close(r *ghttp.Request) {
 
 	if wd.ss != nil {
 		err := wd.ss.Stop()
-
 		if err != nil {
 			response.JsonExit(r, 1, "关闭ChromDriver的时候发生错误:", err.Error())
 			return
